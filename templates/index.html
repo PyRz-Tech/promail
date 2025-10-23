@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .card {
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-6px);
+        }
+        .btn {
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background-color: #b91c1c;
+        }
+        
+        /* FIX: رنگ متن مشکی برای input و textarea */
+        input, textarea {
+            color: #000 !important; /* مشکی */
+            background-color: #fff !important; /* پس‌زمینه سفید */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: #000 !important; /* خاکستری برای placeholder */
+        }
+        
+        input:focus, textarea:focus {
+            border-color: #b91c1c;
+            box-shadow: 0 0 10px rgba(185, 28, 28, 0.2);
+            outline: none;
+            color: #000 !important;
+        }
+        label {
+            color: black;
+            font-weight: 600;
+        }
+        .errorlist {
+            display: none !important;
+        }
+        .icon {
+            transition: color 0.3s ease;
+        }
+        .icon:hover {
+            color: #b91c1c;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center text-gray-100">
+    <div id="toast" class="toast"></div>
+    <div class="container mx-auto p-4 sm:p-6 max-w-2xl">
+        <h1 class="text-4xl font-bold text-center text-red-600 mb-8 drop-shadow-lg">
+            <i class="fa-solid fa-list-check text-red-500 mr-2"></i> Project Manager
+        </h1>
+
+        <!-- Combined All-in-One Form -->
+        <div class="bg-white p-6 rounded-xl shadow-lg card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fa-solid fa-plus text-red-500 mr-2 icon"></i> Add New & Send
+            </h2>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                {{ form.as_p }}                
+                <button type="submit" name="add_all" class="w-full bg-red-600 text-white p-3 rounded-lg font-medium btn hover:bg-red-700">
+                    Add & Send
+                </button>
+            </form>
+            
+            {% if messages %}
+                <div class="mt-4 space-y-2">
+                    {% for message in messages %}
+                        <p class="text-center text-sm font-medium {% if message.tags == 'success' %}text-green-600{% else %}text-red-600{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // نمایش پیام موفقیت
+        const toastDiv = document.getElementById('toast');
+        {% if messages %}
+            {% for message in messages %}
+                toastDiv.textContent = "{{ message }}";
+                toastDiv.style.display = "block";
+
+                // بعد از 5 ثانیه مخفی شود
+                setTimeout(() => {
+                    toastDiv.style.display = "none";
+                }, 5000);
+            {% endfor %}
+        {% endif %}
+    </script>
+
+</body>
+</html>
