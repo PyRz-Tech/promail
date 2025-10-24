@@ -11,4 +11,4 @@ class Project(models.Model):
     
     
     def __str__(self):
-        return f"project name id : {self.name} | email : {self.email}"
+        return f"project name : {self.name} _ email : {self.email}"

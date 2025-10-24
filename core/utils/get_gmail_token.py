@@ -9,7 +9,7 @@ def main():
     with open('token.json', 'w') as token_file:
         token_file.write(creds.to_json())
 
-    print("✅ token.json created successfully!")
+    print("token.json created successfully!")
 
 if __name__ == '__main__':
     main()

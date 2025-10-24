@@ -28,15 +28,15 @@
             background-color: #b91c1c;
         }
         
-        /* FIX: رنگ متن مشکی برای input و textarea */
+  
         input, textarea {
-            color: #000 !important; /* مشکی */
-            background-color: #fff !important; /* پس‌زمینه سفید */
+            color: #000 !important; 
+            background-color: #fff !important; 
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         
         input::placeholder, textarea::placeholder {
-            color: #000 !important; /* خاکستری برای placeholder */
+            color: #000 !important; 
         }
         
         input:focus, textarea:focus {
@@ -103,14 +103,14 @@
     </div>
 
     <script>
-        // نمایش پیام موفقیت
+      
         const toastDiv = document.getElementById('toast');
         {% if messages %}
             {% for message in messages %}
                 toastDiv.textContent = "{{ message }}";
                 toastDiv.style.display = "block";
 
-                // بعد از 5 ثانیه مخفی شود
+              
                 setTimeout(() => {
                     toastDiv.style.display = "none";
                 }, 5000);
